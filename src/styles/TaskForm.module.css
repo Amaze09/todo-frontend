@@ -1,0 +1,36 @@
+/* src/styles/TaskForm.module.css */
+.task-form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+  }
+  
+  .task-form-container input,
+  .task-form-container textarea,
+  .task-form-container select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .task-form-container button {
+    background-color: #0070f3;
+    color: white;
+    padding: 0.8rem 2rem;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .task-form-container button:hover {
+    background-color: #005bb5;
+  }
+  
