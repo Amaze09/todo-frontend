@@ -11,17 +11,23 @@ export default NextAuth({
       },
       async authorize(credentials) {
         // Replace this with your actual authentication logic
-        if (
-          credentials?.username === 'admin' &&
-          credentials?.password === 'password'
-        ) {
-          // Return a user object with 'id' as a string
+        const res = await fetch("http://localhost:8080/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: credentials?.username,
+            password: credentials?.password,
+          }),
+        });
+
+        const user = await res.json();
+        if (res.ok && user) {
           return {
-            id: '1', // Make sure 'id' is a string
-            name: 'Admin',
+            id: user.id,
+            name: user.username,
           }
         }
-        return null // Return null if credentials are invalid
+        return null
       },
     }),
   ],
@@ -41,7 +47,6 @@ export default NextAuth({
     },
     async session({ session, token }) {
       if (session?.user && token) { // Ensure session.user and token are defined
-        session.user.id = (token.id as string) // Type assertion to 'string'
         session.user.name = token.name as string // Type assertion to 'string'
       }
       return session

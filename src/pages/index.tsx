@@ -1,8 +1,7 @@
-// src/pages/index.tsx
 import { GetServerSideProps } from 'next'
+import React, { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-import { getSession } from 'next-auth/react' // <-- Add this import
-import { useState } from 'react'
+import { getSession } from 'next-auth/react'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import { Task } from '../types/task'
@@ -13,29 +12,92 @@ const Home = () => {
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const { data: session } = useSession()
 
-  const addTask = (newTask: Task) => {
-    setTasks((prevTasks) => [...prevTasks, newTask])
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/tasksByUser/${session?.user?.name}`, {
+        method: 'GET',
+      })
+      const data = await response.json()
+      setTasks(data)
+    } catch (error) {
+      console.error('Failed to fetch tasks:', error)
+    }
   }
 
-  const editTask = (updatedTask: Task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-    )
-    setEditingTask(null) // Clear editing task after update
+  const addTask = async (newTask: Task) => {
+    try {
+      const response = await fetch('http://localhost:8080/api/createTask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...newTask, username: session?.user?.name }),
+      })
+      const createdTask = await response.json()
+      setTasks((prevTasks) => [...prevTasks, createdTask])
+    } catch (error) {
+      console.error('Failed to add task:', error)
+    }
   }
 
-  const deleteTask = (taskId: string) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId))
+  const editTask = async (updatedTask: Task) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/tasks/${updatedTask.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTask),
+      })
+      const updated = await response.json()
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === updated.id ? updated : task))
+      )
+      setEditingTask(null) // Clear editing task after update
+    } catch (error) {
+      console.error('Failed to update task:', error)
+    }
+  }
+
+  const deleteTask = async (taskId: string) => {
+    try {
+      await fetch(`http://localhost:8080/api/tasks/${taskId}`, {
+        method: 'DELETE',
+      })
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId))
+    } catch (error) {
+      console.error('Failed to delete task:', error)
+    }
+  }
+
+  const completeTask = async (taskId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/tasks/complete/${taskId}`, {
+        method: 'PUT',
+      })
+      const completedTask = await response.json()
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === taskId ? completedTask : task))
+      )
+    } catch (error) {
+      console.error('Failed to mark task as completed:', error)
+    }
   }
 
   const handleLogout = () => {
-    signOut({ callbackUrl: '/' }) // Redirect to home after logging out
+    signOut({ callbackUrl: '/login' }) // Redirect to the login page after logout
   }
+
+  useEffect(() => {
+    if (session) {
+      fetchTasks()
+    }
+  }, [session])
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Todo App</h1>
-      
+
       {session ? (
         <div className={styles.sessionInfo}>
           <p className={styles.welcome}>Welcome, {session.user?.name}!</p>
@@ -46,9 +108,14 @@ const Home = () => {
       ) : (
         <p className={styles.notLoggedIn}>You are not logged in.</p>
       )}
-      
+
       <TaskForm task={editingTask!} onSubmit={editingTask ? editTask : addTask} />
-      <TaskList tasks={tasks} onEdit={setEditingTask} onDelete={deleteTask} />
+      <TaskList
+        tasks={tasks}
+        onEdit={setEditingTask}
+        onDelete={deleteTask}
+        onComplete={completeTask} // Pass the completeTask method
+      />
     </div>
   )
 }
@@ -57,7 +124,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context
   const session = await getSession({ req })
 
-  // Redirect to login page if the user is not logged in
   if (!session) {
     return {
       redirect: {

@@ -1,10 +1,10 @@
 // src/types/task.ts
 export interface Task {
-    id: string;
+    id?: string;
     title: string;
-    priority: any;
-    deadline: any;
-    description: any;
+    priority: number;
+    deadline: string;
+    description: string;
     completed: boolean;
   }
   

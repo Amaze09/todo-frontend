@@ -1,5 +1,5 @@
-// src/pages/login.tsx
 import { useForm } from 'react-hook-form'
+import React from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import styles from '../styles/Login.module.css' // Import the styles
@@ -27,10 +27,14 @@ const LoginPage = () => {
     }
   }
 
+  const goToSignup = () => {
+    router.push('/signup') // Redirect to the signup page
+  }
+
   return (
     <div className={styles.container}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h1 className={styles.title}>Login</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <input
           className={styles.inputField}
           {...register('username')}
@@ -46,6 +50,9 @@ const LoginPage = () => {
           Log In
         </button>
       </form>
+      <button onClick={goToSignup} className={styles.signupButton}>
+        Don't have an account? Sign Up
+      </button>
     </div>
   )
 }
