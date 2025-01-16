@@ -8,45 +8,44 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
-  const [title, setTitle] = useState(task?.title || '');
-  const [description, setDescription] = useState(task?.description || '');
-  const [priority, setPriority] = useState(task?.priority || 5);
-  const [date, setDate] = useState(task?.deadline ? task.deadline.split('T')[0] : '');
-  const [time, setTime] = useState(
-    task?.deadline
-      ? new Date(task.deadline).toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        })
-      : ''
-  );
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState(5);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  // Reset form fields when `task` prop changes
   useEffect(() => {
     if (task) {
-      setTitle(task.title);
-      setDescription(task.description);
-      setPriority(task.priority);
-
+      setTitle(task.title || '');
+      setDescription(task.description || '');
+      setPriority(task.priority || 5);
       if (task.deadline) {
         const deadlineDate = new Date(task.deadline);
-        setDate(deadlineDate.toISOString().split('T')[0]); // Local date
+        setDate(deadlineDate.toISOString().split('T')[0]);
         setTime(
           deadlineDate.toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
             hour12: false,
           })
-        ); // Local time
+        );
       }
+    } else {
+      // Clear all inputs when no task is provided
+      setTitle('');
+      setDescription('');
+      setPriority(5);
+      setDate('');
+      setTime('');
+      setError(null);
     }
   }, [task]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation for required fields
     if (!title.trim()) {
       setError('Task Name is required.');
       return;
@@ -64,22 +63,20 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
       return;
     }
 
-    // Combine date and time as local time
     const [hours, minutes] = time.split(':').map(Number);
-    const localDeadline = new Date(date); // Start with the date
-    localDeadline.setHours(hours, minutes); // Set hours and minutes as local time
+    const localDeadline = new Date(date);
+    localDeadline.setHours(hours, minutes);
 
-    // Submit the form if all fields are valid
     onSubmit({
       id: task?.id,
       title: title.trim(),
       description: description.trim(),
       priority,
-      deadline: localDeadline.toISOString(), // Convert to ISO string for backend
+      deadline: localDeadline.toISOString(),
       completed: task?.completed || false,
     });
 
-    // Reset the form
+    // Reset the form after submission
     setTitle('');
     setDescription('');
     setPriority(5);
@@ -101,7 +98,7 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
-            setError(null); // Clear error when the user types
+            setError(null);
           }}
         />
       </label>
@@ -114,7 +111,7 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
-            setError(null); // Clear error when the user types
+            setError(null);
           }}
         />
       </label>
@@ -129,7 +126,7 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
           value={priority}
           onChange={(e) => {
             setPriority(Number(e.target.value));
-            setError(null); // Clear error when the user types
+            setError(null);
           }}
         />
       </label>
@@ -142,7 +139,7 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
           value={date}
           onChange={(e) => {
             setDate(e.target.value);
-            setError(null); // Clear error when the user selects a date
+            setError(null);
           }}
         />
       </label>
@@ -155,7 +152,7 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
           value={time}
           onChange={(e) => {
             setTime(e.target.value);
-            setError(null); // Clear error when the user selects a time
+            setError(null);
           }}
         />
       </label>

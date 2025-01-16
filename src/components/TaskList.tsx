@@ -1,5 +1,6 @@
 import { Task } from '../types/task'
 import React from 'react'
+import { useRouter } from 'next/router'
 
 interface TaskListProps {
   tasks: Task[]
@@ -9,30 +10,50 @@ interface TaskListProps {
 }
 
 const TaskList = ({ tasks, onEdit, onDelete, onComplete }: TaskListProps) => {
+  const router = useRouter()
+
+  const handleMagicClick = (task: Task) => {
+    // Redirect to AI Suggestion page with task details as query parameters
+    router.push({
+      pathname: '/ai-suggestions',
+      query: { taskId: task.id, taskTitle: task.title, taskDescription: task.description }
+    })
+  }
+
   return (
     <ul className="task-list">
       {tasks.map((task) => (
-        <li key={task?.id} className="task-item">
-          <div className="task-content">
-            <span className={`task-title ${task.completed ? 'completed' : ''}`}>
-              {task.title}
-            </span>
-            {task.completed && task.description && (
-              <p className="task-description">{task.description}</p>
-            )}
-          </div>
+        <li key={task.id} className={`task-item ${task.completed ? 'completed' : ''}`}>
+          <span className="task-title">{task.title}</span>
+          
           {!task.completed && (
-            <div className="task-buttons">
-              <button className="edit-button" onClick={() => onEdit(task)}>
+            <>
+              <button
+                className="edit-button"
+                onClick={() => onEdit(task)}
+              >
                 Edit
               </button>
-              <button className="delete-button" onClick={() => onDelete(task.id)}>
+              <button
+                className="delete-button"
+                onClick={() => onDelete(task.id)}
+              >
                 Delete
               </button>
-              <button className="complete-button" onClick={() => onComplete(task.id)}>
+              <button
+                className="complete-button"
+                onClick={() => onComplete(task.id)}
+              >
                 Complete
               </button>
-            </div>
+              {/* Magic Wand Button */}
+              <button
+                className="magic-button"
+                onClick={() => handleMagicClick(task)}
+              >
+                ✨
+              </button>
+            </>
           )}
         </li>
       ))}

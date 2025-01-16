@@ -37,7 +37,8 @@
 }
 
 button {
-  padding: 0.6rem 1rem;
+  padding: 0.3rem 0.6rem; /* Smaller padding for smaller buttons */
+  font-size: 0.9rem; /* Smaller font size */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -56,3 +57,18 @@ button {
   background-color: #005bb5;
 }
 
+/* Small Magic Wand Button */
+.magic-button {
+  background-color: #fbbf24; /* Yellow color for magic wand */
+  color: #333; /* Dark text color for contrast */
+  padding: 0.3rem 0.6rem; /* Same size as other buttons */
+  font-size: 0.9rem; /* Consistent font size */
+  border-radius: 50%; /* Circular button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.magic-button:hover {
+  background-color: #f59e0b; /* Darker yellow on hover */
+}

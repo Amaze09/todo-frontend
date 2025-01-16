@@ -44,12 +44,23 @@
   margin-top: 1.5rem; /* Added margin to separate from input fields */
 }
 
-.login-btn, .signup-btn {
+.login-btn{
   background-color: #0070f3;
   color: white;
   padding: 0.8rem 2rem;
   width: 100%;
   border: none;
+  margin-top: 50px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+ .signup-btn {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.8rem 2rem;
+  width: 100%;
   border-radius: 5px;
   font-size: 1.2rem;
   cursor: pointer;

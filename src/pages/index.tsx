@@ -24,6 +24,12 @@ const Home = () => {
     }
   }
 
+  const calculateCompletionPercentage = () => {
+    if (tasks.length === 0) return 0
+    const completedTasks = tasks.filter((task) => task.completed).length
+    return Math.round((completedTasks / tasks.length) * 100)
+  }
+
   const addTask = async (newTask: Task) => {
     try {
       const response = await fetch('http://localhost:8080/api/createTask', {
@@ -63,12 +69,20 @@ const Home = () => {
     try {
       await fetch(`http://localhost:8080/api/deleteTask/${taskId}`, {
         method: 'DELETE',
-      })
-      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId))
+      });
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  
+      // Clear editingTask if the deleted task was being edited
+      if (editingTask?.id === taskId) {
+        setEditingTask(null);
+      }
     } catch (error) {
-      console.error('Failed to delete task:', error)
+      console.error('Failed to delete task:', error);
     }
-  }
+  };
+  
+
+  
 
   const completeTask = async (taskId: string) => {
     try {
@@ -88,29 +102,26 @@ const Home = () => {
     signOut({ callbackUrl: '/login' }) // Redirect to the login page after logout
   }
 
-  const calculateCompletionPercentage = () => {
-    const totalTasks = tasks.length
-    const completedTasks = tasks.filter((task) => task.completed).length
-    return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
-  }
-
   useEffect(() => {
     if (session) {
       fetchTasks()
     }
   }, [session])
 
+  const completionPercentage = calculateCompletionPercentage()
+  const message = completionPercentage === 100
+    ? "Great job! All tasks are complete."
+    : `You have completed ${completionPercentage}% of your tasks.`
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>ToDo-Ai</h1>
+      <h1 className={styles.title}>Todo App</h1>
 
       {session ? (
         <div className={styles.sessionInfo}>
           <p className={styles.welcome}>
-            Welcome, {session.user?.name}!{' '}
-            <span className={styles.stats}>
-              You have completed {calculateCompletionPercentage()}% of your tasks.
-            </span>
+            Welcome, {session.user?.name}! <br />
+            <span className={styles.completionMessage}>{message}</span>
           </p>
           <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
@@ -121,6 +132,7 @@ const Home = () => {
       )}
 
       <TaskForm task={editingTask!} onSubmit={editingTask ? editTask : addTask} />
+
       <TaskList
         tasks={tasks}
         onEdit={setEditingTask}
