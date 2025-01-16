@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { useSession, signOut } from 'next-auth/react'
 import { getSession } from 'next-auth/react'
 import TaskForm from '../components/TaskForm'
@@ -11,6 +12,7 @@ const Home = () => {
   const [tasks, setTasks] = useState<Task[]>([])
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const { data: session } = useSession()
+  const router = useRouter()
 
   const fetchTasks = async () => {
     try {
@@ -22,12 +24,6 @@ const Home = () => {
     } catch (error) {
       console.error('Failed to fetch tasks:', error)
     }
-  }
-
-  const calculateCompletionPercentage = () => {
-    if (tasks.length === 0) return 0
-    const completedTasks = tasks.filter((task) => task.completed).length
-    return Math.round((completedTasks / tasks.length) * 100)
   }
 
   const addTask = async (newTask: Task) => {
@@ -72,17 +68,13 @@ const Home = () => {
       });
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   
-      // Clear editingTask if the deleted task was being edited
       if (editingTask?.id === taskId) {
         setEditingTask(null);
       }
     } catch (error) {
       console.error('Failed to delete task:', error);
     }
-  };
-  
-
-  
+  }
 
   const completeTask = async (taskId: string) => {
     try {
@@ -102,16 +94,15 @@ const Home = () => {
     signOut({ callbackUrl: '/login' }) // Redirect to the login page after logout
   }
 
+  const redirectToSuggestions = () => {
+    router.push('/ai-suggestions') // Redirects to the AI Suggestions page
+  }
+
   useEffect(() => {
     if (session) {
       fetchTasks()
     }
   }, [session])
-
-  const completionPercentage = calculateCompletionPercentage()
-  const message = completionPercentage === 100
-    ? "Great job! All tasks are complete."
-    : `You have completed ${completionPercentage}% of your tasks.`
 
   return (
     <div className={styles.container}>
@@ -120,8 +111,7 @@ const Home = () => {
       {session ? (
         <div className={styles.sessionInfo}>
           <p className={styles.welcome}>
-            Welcome, {session.user?.name}! <br />
-            <span className={styles.completionMessage}>{message}</span>
+            Welcome, {session.user?.name}!
           </p>
           <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
@@ -130,6 +120,11 @@ const Home = () => {
       ) : (
         <p className={styles.notLoggedIn}>You are not logged in.</p>
       )}
+
+      {/* Magic Button */}
+      <button className={styles.magicButton} onClick={redirectToSuggestions}>
+        ✨ Magic AI Suggestions
+      </button>
 
       <TaskForm task={editingTask!} onSubmit={editingTask ? editTask : addTask} />
 

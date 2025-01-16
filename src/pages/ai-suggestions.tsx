@@ -2,47 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import styles from '../styles/AISuggestions.module.css';
-// taskid to send to backend
+
 const AISuggestions = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { taskId, taskTitle, taskDescription } = router.query; // Retrieve task details from query params
 
-  const [steps, setSteps] = useState<string[]>([]); // Store task steps
+  const [suggestion, setSuggestion] = useState<string | null>(null); // Store AI suggestion
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Function to get task details from AI (simulate AI response)
-  const getAIResponse = async () => {
-    if (!taskTitle || !taskDescription) return;
+  const fetchAISuggestion = async () => {
+    if (!session?.user?.name) {
+      console.error("User is not logged in or session is unavailable.");
+      return;
+    }
 
     setLoading(true);
-
     try {
-      const response = await fetch('/api/ask-ai', {
+      const response = await fetch('http://localhost:8080/api/getAISuggestion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ taskTitle, taskDescription }),
+        body: JSON.stringify({ username: session.user.name }), // Send username to the backend API
       });
       const data = await response.json();
-
-      // Assuming the AI returns only steps now
-      setSteps(data.steps || []);
+      setSuggestion(data.suggestion.response || 'No suggestion available.');
     } catch (error) {
-      console.error('Error fetching AI response:', error);
+      console.error('Error fetching AI suggestion:', error);
+      setSuggestion('Failed to fetch suggestions. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (taskTitle && taskDescription) {
-      getAIResponse();
+    if (session?.user?.name) {
+      fetchAISuggestion();
     }
-  }, [taskTitle, taskDescription]);
+  }, [session?.user?.name]);
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>AI Task Suggestions</h1>
+      <h1 className={styles.title}>AI Task Prioritization</h1>
       {session ? (
         <div className={styles.sessionInfo}>
           <p className={styles.welcome}>Hello, {session.user?.name}!</p>
@@ -51,28 +50,18 @@ const AISuggestions = () => {
         <p className={styles.notLoggedIn}>You are not logged in.</p>
       )}
 
-      <div className={styles.taskDetails}>
-        <h2>Task: {taskTitle}</h2>
-        <p>{taskDescription}</p>
-      </div>
-
       {loading ? (
-        <p>Loading AI response...</p>
+        <p className={styles.loading}>Fetching prioritization suggestion...</p>
       ) : (
-        <div className={styles.aiResponse}>
-          <h4>Task Steps:</h4>
-          <ul>
-            {steps.map((step, index) => (
-              <li key={index}>{step}</li>
-            ))}
-          </ul>
+        <div className={styles.suggestionBox}>
+          <h3>Prioritization Suggestion:</h3>
+          <p>{suggestion}</p>
         </div>
       )}
 
-      {/* Back button */}
-      <button 
-        className={styles.backButton} 
-        onClick={() => router.push('/')} // Navigate to the index page
+      <button
+        className={styles.backButton}
+        onClick={() => router.push('/')} 
       >
         Back to Tasks
       </button>
