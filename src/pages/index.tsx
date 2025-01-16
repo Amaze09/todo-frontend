@@ -42,8 +42,8 @@ const Home = () => {
 
   const editTask = async (updatedTask: Task) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tasks/${updatedTask.id}`, {
-        method: 'PUT',
+      const response = await fetch('http://localhost:8080/api/updateTask', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -61,7 +61,7 @@ const Home = () => {
 
   const deleteTask = async (taskId: string) => {
     try {
-      await fetch(`http://localhost:8080/api/tasks/${taskId}`, {
+      await fetch(`http://localhost:8080/api/deleteTask/${taskId}`, {
         method: 'DELETE',
       })
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId))
@@ -72,8 +72,8 @@ const Home = () => {
 
   const completeTask = async (taskId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tasks/complete/${taskId}`, {
-        method: 'PUT',
+      const response = await fetch(`http://localhost:8080/api/setComplete/${taskId}`, {
+        method: 'POST',
       })
       const completedTask = await response.json()
       setTasks((prevTasks) =>
@@ -88,6 +88,12 @@ const Home = () => {
     signOut({ callbackUrl: '/login' }) // Redirect to the login page after logout
   }
 
+  const calculateCompletionPercentage = () => {
+    const totalTasks = tasks.length
+    const completedTasks = tasks.filter((task) => task.completed).length
+    return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
+  }
+
   useEffect(() => {
     if (session) {
       fetchTasks()
@@ -96,11 +102,16 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Todo App</h1>
+      <h1 className={styles.title}>ToDo-Ai</h1>
 
       {session ? (
         <div className={styles.sessionInfo}>
-          <p className={styles.welcome}>Welcome, {session.user?.name}!</p>
+          <p className={styles.welcome}>
+            Welcome, {session.user?.name}!{' '}
+            <span className={styles.stats}>
+              You have completed {calculateCompletionPercentage()}% of your tasks.
+            </span>
+          </p>
           <button className={styles.logoutButton} onClick={handleLogout}>
             Logout
           </button>

@@ -1,55 +1,61 @@
 /* src/styles/Login.module.css */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f7fc;
-  }
-  
-  .login-form {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #333;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .input-field:focus {
-    border-color: #0070f3;
-    outline: none;
-  }
-  
-  .login-btn {
-    background-color: #0070f3;
-    color: white;
-    padding: 0.8rem 2rem;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .login-btn:hover {
-    background-color: #005bb5;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7fc;
+}
+
+.login-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.input-field:focus {
+  border-color: #0070f3;
+  outline: none;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Add space between buttons */
+  margin-top: 1.5rem; /* Added margin to separate from input fields */
+}
+
+.login-btn, .signup-btn {
+  background-color: #0070f3;
+  color: white;
+  padding: 0.8rem 2rem;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover, .signup-btn:hover {
+  background-color: #005bb5;
+}

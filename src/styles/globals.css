@@ -1,203 +1,209 @@
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    background-color: #f5f7fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-  }
-  
-  /* Container styles */
-  .container {
-    max-width: 800px;
-    width: 90%;
-    margin: 2rem auto;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative; /* Allow absolute positioning for children */
-  }
-  
-  /* Header */
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #0070f3;
-    text-align: center;
-  }
-  
-  /* Logout Button */
-  .logout-button {
-    position: absolute; /* Position relative to the container */
-    top: 1rem;
-    right: 1rem;
-    background-color: #ff4d4f;
-    color: white;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: #d9363e;
-  }
-  
-  /* Buttons */
-  button {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background-color: #0070f3;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #005bb5;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  /* Forms */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  input,
-  textarea,
-  select {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  input:focus,
-  textarea:focus,
-  select:focus {
-    outline: none;
-    border-color: #0070f3;
-    box-shadow: 0 0 5px rgba(0, 112, 243, 0.3);
-  }
-  
-  /* Task Form */
-  .task-form {
-    margin-top: 2rem;
-  }
-  
-  .task-form input,
-  .task-form textarea,
-  .task-form select {
-    margin-bottom: 1rem;
-  }
-  
-  .task-form button {
-    align-self: flex-end;
-  }
-  
-  /* Task List */
-  .task-list {
-    margin-top: 2rem;
-    list-style: none;
-    padding: 0;
-  }
-  
-  .task-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: #f9f9f9;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-  }
-  
-  .task-list li span {
-    font-size: 1rem;
-    flex: 1;
-  }
-  
-  .task-list button {
-    margin-left: 1rem;
-  }
-  
-  .task-list .edit-btn {
-    background-color: #ffa500;
-  }
-  
-  .task-list .edit-btn:hover {
-    background-color: #cc8400;
-  }
-  
-  .task-list .delete-btn {
-    background-color: #ff4b5c;
-  }
-  
-  .task-list .delete-btn:hover {
-    background-color: #e63b4e;
-  }
-  
-  /* Login */
-  .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-  }
-  
-  .login-form {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login-form input {
-    margin-bottom: 1.5rem;
-  }
-  
-  .login-form button {
-    width: 100%;
-  }
-  
-  /* Utility Classes */
-  .text-center {
-    text-align: center;
-  }
-  
-  .mt-1 {
-    margin-top: 1rem;
-  }
-  
-  .mb-1 {
-    margin-bottom: 1rem;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  background-color: #b3e0f2; /* Slightly darker cool light blue background */
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* Container Styles */
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: 2rem auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Header */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #0070f3;
+  text-align: center;
+  text-shadow: 1px 1px 10px rgba(0, 112, 243, 0.2);
+}
+
+/* Logout Button */
+.logout-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Buttons */
+button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #0070f3;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.2);
+}
+
+button:hover {
+  background-color: #005bb5;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* This ensures space between form elements */
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #f9fafb;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 8px rgba(0, 112, 243, 0.3);
+}
+
+/* Task Form */
+.task-form {
+  margin-top: 2rem;
+}
+
+.task-form input,
+.task-form textarea,
+.task-form select {
+  margin-bottom: 1rem;
+}
+
+.task-form button {
+  align-self: flex-end;
+}
+
+/* Task List */
+.task-list {
+  margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-list li span {
+  font-size: 1rem;
+  flex: 1;
+}
+
+.task-list button {
+  margin-left: 1rem;
+}
+
+.task-list .edit-btn {
+  background-color: #f39c12;
+}
+
+.task-list .edit-btn:hover {
+  background-color: #d35400;
+}
+
+.task-list .delete-btn {
+  background-color: #e74c3c;
+}
+
+.task-list .delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Login */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-form input {
+  margin-bottom: 1.5rem;
+}
+
+.login-form button {
+  width: 100%;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}

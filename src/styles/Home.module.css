@@ -1,18 +1,23 @@
 /* src/styles/Home.module.css */
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f4f7fc;
+  background-color: #f9fbff;
   padding: 2rem;
+  font-family: 'Roboto', sans-serif;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 .sessionInfo {
@@ -20,43 +25,102 @@
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.welcome {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #34495e;
+  text-align: center;
+}
+
+.notLoggedIn {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  text-align: center;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.form-button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+}
+
+.form-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.form-button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .sessionInfo {
+    padding: 1.5rem;
+  }
+
+  .welcome {
+    font-size: 1.2rem;
+  }
+
+  .notLoggedIn {
+    font-size: 1rem;
+  }
+
+  .logout-btn,
+  .form-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.sessionInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .welcome {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #555;
 }
 
-.notLoggedIn {
-  font-size: 1rem;
-  color: gray;
+.stats {
+  font-weight: bold;
+  color: #0070f3;
 }
 
-.logout-btn {
-  background-color: #ff4b5c;
-  color: white;
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-}
-
-.logout-btn:hover {
-  background-color: #e63b4e;
-}
-
-.form-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-}
-
-.form-button:hover {
-  background-color: #45a049;
-}

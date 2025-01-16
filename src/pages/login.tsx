@@ -33,7 +33,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Login</h1>
+      <h1 className={styles.title}>ToDo-Ai</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <input
           className={styles.inputField}
