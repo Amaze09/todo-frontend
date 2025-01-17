@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import styles from '../styles/AISuggestions.module.css';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+const api_url = process.env.API_URL || 'http://localhost:8080'
 
 const AISuggestions = () => {
   const { data: session } = useSession();
@@ -18,7 +22,7 @@ const AISuggestions = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/getAISuggestion', {
+      const response = await fetch(api_url + '/api/getAISuggestion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: session.user.name }),

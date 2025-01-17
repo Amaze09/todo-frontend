@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form'
 import React from 'react';
 import { useRouter } from 'next/router'
 import styles from '../styles/Signup.module.css'
+import * as dotenv  from 'dotenv'
+dotenv.config()
+
+const api_url = process.env.API_URL || 'http://localhost:8080'
 
 interface FormData {
   username: string
@@ -16,7 +20,7 @@ const SignupPage = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch("http://localhost:8080/api/signup", {
+      const response = await fetch(api_url + "/api/signup", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

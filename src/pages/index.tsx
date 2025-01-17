@@ -7,6 +7,10 @@ import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import { Task } from '../types/task'
 import styles from '../styles/Home.module.css'
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const api_url = process.env.API_URL || 'http://localhost:8080'
 
 const Home = () => {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -16,7 +20,7 @@ const Home = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tasksByUser/${session?.user?.name}`, {
+      const response = await fetch(api_url + `/api/tasksByUser/${session?.user?.name}`, {
         method: 'GET',
       })
       const data = await response.json()
@@ -28,7 +32,7 @@ const Home = () => {
 
   const addTask = async (newTask: Task) => {
     try {
-      const response = await fetch('http://localhost:8080/api/createTask', {
+      const response = await fetch(api_url + '/api/createTask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +48,7 @@ const Home = () => {
 
   const editTask = async (updatedTask: Task) => {
     try {
-      const response = await fetch('http://localhost:8080/api/updateTask', {
+      const response = await fetch(api_url + '/api/updateTask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +67,7 @@ const Home = () => {
 
   const deleteTask = async (taskId: string) => {
     try {
-      await fetch(`http://localhost:8080/api/deleteTask/${taskId}`, {
+      await fetch(api_url + `/api/deleteTask/${taskId}`, {
         method: 'DELETE',
       });
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
@@ -78,7 +82,7 @@ const Home = () => {
 
   const completeTask = async (taskId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/setComplete/${taskId}`, {
+      const response = await fetch(api_url + `/api/setComplete/${taskId}`, {
         method: 'POST',
       })
       const completedTask = await response.json()

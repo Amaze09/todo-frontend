@@ -1,6 +1,9 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import * as dotenv from 'dotenv'  
+dotenv.config()
 
+const api_url = process.env.API_URL || 'http://localhost:8080' 
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -10,7 +13,7 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:8080/api/login", {
+        const res = await fetch(api_url + "/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
