@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import React from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import styles from '../styles/Login.module.css' // Import the styles
+import styles from '../styles/Login.module.css' 
 
 interface FormData {
   username: string
@@ -23,12 +23,12 @@ const LoginPage = () => {
     if (res?.error) {
       alert('Login failed')
     } else {
-      router.push('/') // Redirect to the home page
+      router.push('/') 
     }
   }
 
   const goToSignup = () => {
-    router.push('/signup') // Redirect to the signup page
+    router.push('/signup') 
   }
 
   return (

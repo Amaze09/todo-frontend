@@ -10,7 +10,6 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // Replace this with your actual authentication logic
         const res = await fetch("http://localhost:8080/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -32,10 +31,10 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: '/login', // Custom login page
+    signIn: '/login', 
   },
   session: {
-    strategy: 'jwt', // Use JWT strategy
+    strategy: 'jwt', 
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -46,8 +45,8 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-      if (session?.user && token) { // Ensure session.user and token are defined
-        session.user.name = token.name as string // Type assertion to 'string'
+      if (session?.user && token) { 
+        session.user.name = token.name as string 
       }
       return session
     },

@@ -1,4 +1,3 @@
-// src/types/nextauth.d.ts
 import { Session, JWT } from 'next-auth'
 
 declare module 'next-auth' {

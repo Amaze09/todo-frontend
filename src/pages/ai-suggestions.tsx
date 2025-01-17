@@ -7,7 +7,7 @@ const AISuggestions = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [suggestion, setSuggestion] = useState<string | null>(null); // Store AI suggestion
+  const [suggestion, setSuggestion] = useState<string | null>(null); 
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchAISuggestion = async () => {
@@ -21,7 +21,7 @@ const AISuggestions = () => {
       const response = await fetch('http://localhost:8080/api/getAISuggestion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: session.user.name }), // Send username to the backend API
+        body: JSON.stringify({ username: session.user.name }),
       });
       const data = await response.json();
       setSuggestion(data.suggestion.response || 'No suggestion available.');

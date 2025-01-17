@@ -56,15 +56,18 @@ a {
 
 /* Buttons */
 button {
+  color: lightblue;
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
+  margin-top: 1em;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 button:hover {
+  color: darkblue;
   transform: translateY(-2px);
 }
 
@@ -147,6 +150,9 @@ button:hover {
 /* Forms */
 form {
   margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+
 }
 
 input, textarea {

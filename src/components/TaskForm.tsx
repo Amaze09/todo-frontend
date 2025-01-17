@@ -15,7 +15,6 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
   const [time, setTime] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  // Reset form fields when `task` prop changes
   useEffect(() => {
     if (task) {
       setTitle(task.title || '');
@@ -33,7 +32,6 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
         );
       }
     } else {
-      // Clear all inputs when no task is provided
       setTitle('');
       setDescription('');
       setPriority(5);
@@ -76,7 +74,6 @@ const TaskForm = ({ task, onSubmit }: TaskFormProps) => {
       completed: task?.completed || false,
     });
 
-    // Reset the form after submission
     setTitle('');
     setDescription('');
     setPriority(5);

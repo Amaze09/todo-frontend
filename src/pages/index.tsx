@@ -55,7 +55,7 @@ const Home = () => {
       setTasks((prevTasks) =>
         prevTasks.map((task) => (task.id === updated.id ? updated : task))
       )
-      setEditingTask(null) // Clear editing task after update
+      setEditingTask(null) 
     } catch (error) {
       console.error('Failed to update task:', error)
     }
@@ -91,11 +91,11 @@ const Home = () => {
   }
 
   const handleLogout = () => {
-    signOut({ callbackUrl: '/login' }) // Redirect to the login page after logout
+    signOut({ callbackUrl: '/login' }) 
   }
 
   const redirectToSuggestions = () => {
-    router.push('/ai-suggestions') // Redirects to the AI Suggestions page
+    router.push('/ai-suggestions') 
   }
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const Home = () => {
         tasks={tasks}
         onEdit={setEditingTask}
         onDelete={deleteTask}
-        onComplete={completeTask} // Pass the completeTask method
+        onComplete={completeTask} 
       />
     </div>
   )

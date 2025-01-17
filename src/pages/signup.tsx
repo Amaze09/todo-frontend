@@ -26,8 +26,7 @@ const SignupPage = () => {
         }),
       });
 
-      const responseData = await response.json();  // Wait for the response to be parsed
-      console.log(responseData);
+      const responseData = await response.json();  
 
       if (!response.ok) {
         console.error('Signup failed:', responseData);
@@ -44,13 +43,13 @@ const SignupPage = () => {
   };
 
   const goToLogin = () => {
-    router.push('/login') // Navigate to the login page
+    router.push('/login') 
   }
 
   return (
     <div className={styles.container}>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
         <input
           className={styles.inputField}
           {...register('username')}
